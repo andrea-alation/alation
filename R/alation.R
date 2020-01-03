@@ -255,16 +255,16 @@ getResult <- function(id)
   read.csv(textConnection(r))
 }
 
-#' Get latest result from Alation
+#' Get latest result id from Alation
 #'
 #' @param id Alation Query ID for which you want the most recent execution
-#' @return The result as a data frame
+#' @return The result id
 #' @examples
 #' \dontrun{
-#' df <- getLatestResult(123456)
+#' df <- getLatestResultID(123456)
 #' }
 #'
-getLatestResult <- function(id)
+getLatestResultID <- function(id)
 {
   if(id == "" ) {
     stop("A valid Alation result id is required")
@@ -298,9 +298,21 @@ getLatestResult <- function(id)
     stop("jsonlite package required to connect to parse output", call. = FALSE)
   }
   result_id <- fromJSON(r)$id
-  
-  getResult(result_id)
 }
 
+#' Get latest result from Alation
+#'
+#' @param id Alation Query ID for which you want the most recent execution
+#' @return The result as a data frame
+#' @examples
+#' \dontrun{
+#' df <- getLatestResult(123456)
+#' }
+#'
+getLatestResult <- function(id)
+{
+  result_id <- getLatestResultID(id)
+  getResult(result_id)
+}
 
 
