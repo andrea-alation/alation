@@ -138,8 +138,6 @@ storeToken <- function(token="", url="")
   save(token,url,file=f)
   cat("Initialised successfully\n")
   
-  return;
-  
 }
 
 #' Change token to use API 
