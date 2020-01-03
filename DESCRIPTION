@@ -8,3 +8,4 @@ Maintainer: Matt Gardner <magardner@ebay.com>
 Description: This package enables easy access to queries and results in the Alation tool.
 License: GPL
 Imports: RCurl
+RoxygenNote: 7.0.2
