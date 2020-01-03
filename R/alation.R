@@ -97,6 +97,49 @@ getToken <- function(user="", password="", url="")
   
 }
 
+#' Get a token to use API 
+#'
+#' As a side effect this caches the token for other API calls to utilise
+#' 
+#' @param user Alation username.
+#' @param password Alation password.
+#' @param url Alation URL .
+#' @return An Alation token used in subsequent calls.
+#' @examples
+#' \dontrun{
+#' storeToken(token="aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa", url="https://alation.corp.ebay.com")
+#' }
+#'
+storeToken <- function(token="", url="")
+{
+  cat("\014")
+  
+  if(!is.character(token)) {
+    stop("token must be a chracter string")
+  }
+  if(!is.character(url)) {
+    stop("url must be a character string")
+  }
+  if(token=="") {
+    stop("token must be a character string")
+  }
+  if(url=="") {
+    stop("url must be a character string")
+  }
+  if (length(token)!=1) {
+    stop("token cannot be a vector")
+  }
+  if (length(url)!=1) {
+    stop("url cannot be a vector")
+  }
+  
+  path <- path.package("alation")
+  f <- paste(path,"/.token",sep="")
+  save(token,url,file=f)
+  cat("Initialised successfully\n")
+  
+}
+
 #' Change token to use API 
 #'
 #' As a side effect this caches the token for other API calls to utilise
