@@ -255,5 +255,64 @@ getResult <- function(id)
   read.csv(textConnection(r))
 }
 
+#' Get latest result id from Alation
+#'
+#' @param id Alation Query ID for which you want the most recent execution
+#' @return The result id
+#' @examples
+#' \dontrun{
+#' df <- getLatestResultID(123456)
+#' }
+#'
+getLatestResultID <- function(id)
+{
+  if(id == "" ) {
+    stop("A valid Alation result id is required")
+  }
+  if (id != as.integer(id))
+  {
+    stop("The id must be an integer")
+  }
+  
+  if (!require("RCurl",quietly = TRUE)) {
+    stop("RCurl package required to connect to Alation.", call. = FALSE)
+  }
+  
+  path <- path.package("alation")
+  f <- paste(path,"/.token",sep="")
+  
+  if(!file.exists(f)) {
+    stop("You need an Alation token before calling getResult() - see getToken() for details.")
+  }
+  load(f)
+  
+  header <- basicTextGatherer()
+  u <- paste(url, "/integration/v1/query/",id,"/result/latest/",sep="")
+  opts <- list(httpheader="Content-Type: application/json", httpheader=paste("token: ",token,sep=""),  ssl.verifypeer = FALSE)
+  r <- getURL(u,.opts=opts, headerfunction = header$update)  
+  h <- parseHTTPHeader( header$value() )
+  if (! ( h["status"] >= 200 && h["status"] < 300 ) ) {
+    stop(paste("HTTP error : ", h["status"]," ",h["statusMessage"],". Check the query_id is valid.",sep=""))
+  }
+  if (!require("jsonlite",quietly = TRUE)) {
+    stop("jsonlite package required to connect to parse output", call. = FALSE)
+  }
+  result_id <- fromJSON(r)$id
+}
+
+#' Get latest result from Alation
+#'
+#' @param id Alation Query ID for which you want the most recent execution
+#' @return The result as a data frame
+#' @examples
+#' \dontrun{
+#' df <- getLatestResult(123456)
+#' }
+#'
+getLatestResult <- function(id)
+{
+  result_id <- getLatestResultID(id)
+  getResult(result_id)
+}
 
 
