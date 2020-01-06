@@ -341,6 +341,7 @@ getLatestResultID <- function(id)
     stop("jsonlite package required to connect to parse output", call. = FALSE)
   }
   result_id <- as.numeric(fromJSON(r)$id)
+  print("Most recent query execution details:")
   print(toJSON(fromJSON(r)$execution_event))
   return(result_id)
 }
