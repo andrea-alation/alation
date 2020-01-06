@@ -304,7 +304,7 @@ getResult <- function(id)
 #' @return The result id
 #' @examples
 #' \dontrun{
-#' df <- getLatestResultID(123456)
+#' result_id <- getLatestResultID(123456)
 #' }
 #'
 getLatestResultID <- function(id)

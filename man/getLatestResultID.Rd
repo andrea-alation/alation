@@ -17,7 +17,7 @@ Get latest result id from Alation
 }
 \examples{
 \dontrun{
-df <- getLatestResultID(123456)
+result_id <- getLatestResultID(123456)
 }
 
 }
