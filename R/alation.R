@@ -340,7 +340,7 @@ getLatestResultID <- function(id)
   if (!require("jsonlite",quietly = TRUE)) {
     stop("jsonlite package required to connect to parse output", call. = FALSE)
   }
-  result_id <- fromJSON(r)$id
+  result_id <- as.numeric(fromJSON(r)$id)
   print(toJSON(fromJSON(r)$execution_event))
   return(result_id)
 }
