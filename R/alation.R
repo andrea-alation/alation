@@ -341,6 +341,8 @@ getLatestResultID <- function(id)
     stop("jsonlite package required to connect to parse output", call. = FALSE)
   }
   result_id <- fromJSON(r)$id
+  print(fromJSON(r)$execution_event)
+  return(result_id)
 }
 
 #' Get latest result from Alation
